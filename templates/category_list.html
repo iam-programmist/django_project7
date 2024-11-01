@@ -5,7 +5,7 @@
 <ul class="list-group">
     {% for category in object_list %}
         <li class="list-group-item">
-            {{ category.name }}
+            <a href="{% url 'vacancies_by_category' category.pk %}">{{ category.name }}</a>
             <a href="{% url 'category_update' category.pk %}" class="btn btn-sm btn-primary float-right">Edit</a>
             <a href="{% url 'category_delete' category.pk %}" class="btn btn-sm btn-danger float-right mr-2">Delete</a>
         </li>

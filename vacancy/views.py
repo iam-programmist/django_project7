@@ -3,6 +3,27 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import *
 from .forms import *
 
+class VacanciesByCategoryView(ListView):
+    model = Vacancy
+    template_name = 'vacancies_by_category.html'
+    context_object_name = 'vacancies'
+
+    def get_queryset(self):
+        category = Category.objects.filter(pk=self.kwargs['pk']).first()
+        return Vacancy.objects.filter(category=category)
+    
+class ApplicationCreateView(CreateView):
+    model = Application
+    fields = ['first_name', 'last_name', 'phone_number', 'email', 'address', 'resume']
+    template_name = 'application_form.html'
+    success_url = reverse_lazy('application_list')
+
+    def form_valid(self, form):
+        vacancy_id = self.request.GET.get('vacancy')
+        if vacancy_id:
+            form.instance.vacancy_id = vacancy_id
+        return super().form_valid(form)
+
 class CategoryListView(ListView):
     model = Category
     template_name = 'category_list.html'

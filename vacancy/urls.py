@@ -2,10 +2,11 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('categories/', CategoryListView.as_view(), name='category_list'),
+    path('', CategoryListView.as_view(), name='category_list'),
     path('category/create/', CategoryCreateView.as_view(), name='category_create'),
     path('category/<int:pk>/update/', CategoryUpdateView.as_view(), name='category_update'),
     path('category/<int:pk>/delete/', CategoryDeleteView.as_view(), name='category_delete'),
+    path('categories/<int:pk>/vacancies/', VacanciesByCategoryView.as_view(), name='vacancies_by_category'),
     path('vacancies/', VacancyListView.as_view(), name='vacancy_list'),
     path('vacancy/<int:pk>/', VacancyDetailView.as_view(), name='vacancy_detail'),
     path('vacancy/create/', VacancyCreateView.as_view(), name='vacancy_create'),

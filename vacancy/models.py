@@ -14,6 +14,7 @@ class Vacancy(models.Model):
     typeofwork = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='vacancies', default = 1)
 
     def __str__(self):
         return f'{self.title} - {self.created_at} - {self.is_active}'

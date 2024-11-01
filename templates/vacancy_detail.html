@@ -9,4 +9,5 @@
 <p><strong>Created At:</strong> {{ vacancy.created_at }}</p>
 <a href="{% url 'vacancy_update' vacancy.pk %}" class="btn btn-primary">Edit</a>
 <a href="{% url 'vacancy_delete' vacancy.pk %}" class="btn btn-danger">Delete</a>
+<a href="{% url 'application_create' %}?vacancy={{ vacancy.pk }}" class="btn btn-success mt-3">Send Resume</a>
 {% endblock %}
