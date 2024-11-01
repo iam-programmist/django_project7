@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Categories{% endblock %}
+{% block content %}
+<h2>Categories</h2>
+<ul class="list-group">
+    {% for category in object_list %}
+        <li class="list-group-item">
+            {{ category.name }}
+            <a href="{% url 'category_update' category.pk %}" class="btn btn-sm btn-primary float-right">Edit</a>
+            <a href="{% url 'category_delete' category.pk %}" class="btn btn-sm btn-danger float-right mr-2">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'category_create' %}" class="btn btn-primary mt-3">Add Category</a>
+{% endblock %}

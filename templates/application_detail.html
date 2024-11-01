@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Application Detail{% endblock %}
+{% block content %}
+<h2>Application Detail</h2>
+<p><strong>First Name:</strong> {{ application.first_name }}</p>
+<p><strong>Last Name:</strong> {{ application.last_name }}</p>
+<p><strong>Phone Number:</strong> {{ application.phone_number }}</p>
+<p><strong>Email:</strong> {{ application.email }}</p>
+<p><strong>Address:</strong> {{ application.address }}</p>
+<a href="{% url 'application_update' application.pk %}" class="btn btn-primary">Edit</a>
+<a href="{% url 'application_delete' application.pk %}" class="btn btn-danger">Delete</a>
+{% endblock %}

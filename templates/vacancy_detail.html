@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Vacancy Detail{% endblock %}
+{% block content %}
+<h2>{{ vacancy.title }}</h2>
+<img src="{{ vacancy.image.url }}" alt="Vacancy Image" class="img-fluid mb-3">
+<p>{{ vacancy.description }}</p>
+<p><strong>Salary:</strong> {{ vacancy.salary }}</p>
+<p><strong>Type of Work:</strong> {{ vacancy.typeofwork }}</p>
+<p><strong>Created At:</strong> {{ vacancy.created_at }}</p>
+<a href="{% url 'vacancy_update' vacancy.pk %}" class="btn btn-primary">Edit</a>
+<a href="{% url 'vacancy_delete' vacancy.pk %}" class="btn btn-danger">Delete</a>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Category Form{% endblock %}
+{% block content %}
+<h2>Category Form</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+{% endblock %}

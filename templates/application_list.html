@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Applications{% endblock %}
+{% block content %}
+<h2>Applications</h2>
+<ul class="list-group">
+    {% for application in object_list %}
+        <li class="list-group-item">
+            <a href="{% url 'application_detail' application.pk %}">{{ application.first_name }} {{ application.last_name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'application_create' %}" class="btn btn-primary mt-3">Submit New Application</a>
+{% endblock %}

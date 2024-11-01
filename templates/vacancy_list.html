@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Vacancies{% endblock %}
+{% block content %}
+<h2>Vacancies</h2>
+<ul class="list-group">
+    {% for vacancy in object_list %}
+        <li class="list-group-item">
+            <a href="{% url 'vacancy_detail' vacancy.pk %}">{{ vacancy.title }}</a> - {{ vacancy.salary }}
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'vacancy_create' %}" class="btn btn-primary mt-3">Create Vacancy</a>
+{% endblock %}
