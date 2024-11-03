@@ -8,7 +8,7 @@ class Category(models.Model):
 
 class Vacancy(models.Model):
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='static/images')
+    image = models.ImageField(upload_to='static/images', null = True)
     description = models.TextField()
     salary = models.DecimalField(max_digits=10, decimal_places=2)
     typeofwork = models.CharField(max_length=50)
@@ -22,8 +22,8 @@ class Vacancy(models.Model):
 class Application(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    phone_number = models.CharField(max_length=15)
-    email = models.EmailField()
+    phone_number = models.CharField(max_length=15, unique = True)
+    email = models.EmailField(unique = True)
     address = models.CharField(max_length=100)
 
     def __str__(self):
