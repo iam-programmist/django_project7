@@ -9,12 +9,12 @@ class VacanciesByCategoryView(ListView):
     context_object_name = 'vacancies'
 
     def get_queryset(self):
-        category = Category.objects.filter(pk=self.kwargs['pk']).first()
+        category = VacancyCategory.objects.filter(pk=self.kwargs['pk']).first()
         return Vacancy.objects.filter(category=category)
     
 class ApplicationCreateView(CreateView):
     model = Application
-    fields = ['first_name', 'last_name', 'phone_number', 'email', 'address', 'resume']
+    # fields = ['first_name', 'last_name', 'phone_number', 'email', 'address', 'resume']
     template_name = 'application_form.html'
     success_url = reverse_lazy('application_list')
 
@@ -25,23 +25,23 @@ class ApplicationCreateView(CreateView):
         return super().form_valid(form)
 
 class CategoryListView(ListView):
-    model = Category
+    model = VacancyCategory
     template_name = 'category_list.html'
 
 class CategoryCreateView(CreateView):
-    model = Category
-    form_class = CategoryForm
+    model = VacancyCategory
+    form_class = VacancyCategoryForm
     template_name = 'category_form.html'
     success_url = reverse_lazy('category_list')
 
 class CategoryUpdateView(UpdateView):
-    model = Category
-    form_class = CategoryForm
+    model = VacancyCategory
+    form_class = VacancyCategoryForm
     template_name = 'category_form.html'
     success_url = reverse_lazy('category_list')
 
 class CategoryDeleteView(DeleteView):
-    model = Category
+    model = VacancyCategory
     template_name = 'category_confirm_delete.html'
     success_url = reverse_lazy('category_list')
 
