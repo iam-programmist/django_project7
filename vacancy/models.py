@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 class Country(models.Model):
     name = models.CharField(max_length=100)
 
-    def __str__(self):                                                                                                          
+    def __str__(self):
         return self.name
 
 class City(models.Model):
@@ -82,4 +82,45 @@ class Application(models.Model):
     def save(self, *args, **kwargs):
         if not self.user.is_worker():
             raise ValueError("Only employees can create requests.")
+        super().save(*args, **kwargs)
+
+class Favorite(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='favorites')
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, null=True, blank=True, related_name='favorites')
+    worker = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name='favorited_by')
+
+    def __str__(self):
+        if self.vacancy:
+            return f'{self.user.username} added {self.vacancy.title} to favorites'
+        return f'{self.user.username} added {self.worker.username} to favorites'
+
+    def save(self, *args, **kwargs):
+        if self.user.is_employer() and not self.worker:
+            raise ValueError("Employers can only favorite workers.")
+        if self.user.is_worker() and not self.vacancy:
+            raise ValueError("Workers can only favorite vacancies.")
+        super().save(*args, **kwargs)
+
+class Response(models.Model):
+    application = models.ForeignKey(Application, on_delete=models.CASCADE, related_name='responses')
+    response_message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Response to {self.application.user.username} - {self.created_at}'
+
+class Message(models.Model):
+    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='sent_messages')
+    recipient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='received_messages')
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Message from {self.sender.username} to {self.recipient.username} at {self.timestamp}'
+
+    def save(self, *args, **kwargs):
+        if self.sender.is_employer() and self.recipient.is_employer():
+            raise ValueError("Employers cannot message other employers.")
+        if self.sender.is_worker() and self.recipient.is_worker():
+            raise ValueError("Workers cannot message other workers.")
         super().save(*args, **kwargs)
