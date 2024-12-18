@@ -1,5 +1,5 @@
 from django import forms
-from .models import Country, City, CustomUser, Profile, VacancyCategory, Vacancy, Application
+from .models import Country, City, CustomUser, Profile, VacancyCategory, Vacancy, Application, Favorite, Response, Message
 
 class CountryForm(forms.ModelForm):
     class Meta:
@@ -9,7 +9,7 @@ class CountryForm(forms.ModelForm):
 class CityForm(forms.ModelForm):
     class Meta:
         model = City
-        fields = ['name']
+        fields = ['country','name']
 
 class CustomUserForm(forms.ModelForm):
     class Meta:
@@ -35,3 +35,18 @@ class ApplicationForm(forms.ModelForm):
     class Meta:
         model = Application
         fields = ['user', 'country', 'city', 'message']
+
+class FavoriteForm(forms.ModelForm):
+    class Meta:
+        model = Favorite
+        fields = ['user', 'vacancy', 'worker']
+
+class ResponseForm(forms.ModelForm):
+    class Meta:
+        model = Response
+        fields = ['application', 'response_message']
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['sender', 'recipient', 'content']
